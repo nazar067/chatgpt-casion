@@ -34,11 +34,11 @@ export function AuthDialog({
   return (
     <>
       {initialTab === "register" ? (
-        <Button variant="primaryAuth" onClick={() => setOpen(true)}>
+        <Button variant="primaryAuth" onClick={() => setOpen(true)} className="h-11 w-[102px]">
           Register
         </Button>
       ) : (
-        <Button variant="secondaryAuth" onClick={() => setOpen(true)}>
+        <Button variant="secondaryAuth" onClick={() => setOpen(true)} className="h-11">
           Login
         </Button>
       )}
@@ -159,7 +159,7 @@ export function AuthDialog({
                 style={{ filter: "invert(64%) sepia(90%) saturate(5000%) hue-rotate(180deg) brightness(1.6)" }} 
               />
               <span className={`${montserrat.className}`}>
-                Create an Account
+                {tab === "register" ? "Create an Account" : "Log in"}
               </span>
             </div>
 
@@ -253,7 +253,7 @@ function OrDivider() {
   return (
     <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 text-xs text-gray-400">
       <span className="h-px w-full bg-white/10" />
-      <span>OR</span>
+      <span className={`${montserrat.className}`}>OR</span>
       <span className="h-px w-full bg-white/10" />
     </div>
   );
@@ -268,7 +268,7 @@ function SocialRow() {
           alt="Google"
           width={20}
           height={20}
-          className="object-contain"
+          className="object-contain icon-header"
         />
       </button>
 
@@ -288,7 +288,7 @@ function SocialRow() {
           alt="Steam"
           width={20}
           height={20}
-          className="object-contain"
+          className="object-contain icon-header"
         />
       </button>
     </div>

@@ -24,3 +24,14 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.icon-colored {
+  filter: brightness(0) saturate(100%) invert(54%) sepia(8%) saturate(1165%)
+    hue-rotate(196deg) brightness(90%) contrast(89%);
+}
+.icon-promo {
+  filter: brightness(0) saturate(100%) invert(65%) sepia(84%) saturate(503%) hue-rotate(358deg) brightness(99%) contrast(108%);
+}
+.icon-header {
+  filter: brightness(0) saturate(100%) invert(82%) sepia(16%) saturate(399%) hue-rotate(189deg) brightness(92%) contrast(83%);
+}
