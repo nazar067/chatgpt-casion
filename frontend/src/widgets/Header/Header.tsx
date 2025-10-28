@@ -4,6 +4,7 @@ import Image from "next/image";
 import { AuthDialog } from "@/features/auth/ui/AuthDialog";
 import { useSidebar } from "@/shared/context/SidebarContext";
 import { Montserrat } from "next/font/google";
+import { useChat } from "@/shared/context/ChatContext";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -13,15 +14,15 @@ const montserrat = Montserrat({
 
 export function Header() {
   const { toggle, openSheet } = useSidebar();
+  const { toggleChat } = useChat();
 
   return (
     <header className="fixed top-0 left-0 right-0 z-40 border-b border-white/10 bg-[#141A2E]">
       <div className="flex h-16 w-full items-center justify-between px-0">
         {/* Left */}
         <div className="flex items-center gap-3 pl-3 sm:pl-4">
-          {/* На desktop переключаем ширину; на мобилках открываем drawer */}
           <button
-            className="rounded-lg bg-[#1A1F35] p-2 hover:bg-[#232941]"
+            className="rounded-lg bg-[#1A1F35] p-2 hover:bg-[#232941] cursor-pointer"
             onClick={() => {
               if (window.innerWidth < 768) openSheet();
               else toggle();
@@ -97,7 +98,10 @@ export function Header() {
           <AuthDialog initialTab="register" />
           <AuthDialog initialTab="login" />
           <div className="flex items-center justify-between rounded-xl bg-[#0F1426] w-[136px] h-[48px] px-1">
-            <button className="rounded-lg bg-[#1A1F35] hover:bg-[#232941] flex items-center justify-center w-[40px] h-[40px] border border-[#252D47]">
+            <button 
+              onClick={toggleChat}
+              className="rounded-lg bg-[#1A1F35] hover:bg-[#232941] flex items-center justify-center w-[40px] h-[40px] border border-[#252D47] cursor-pointer"
+            >
               <Image
                 src="/icons/messages/chat-line.png"
                 alt="Messages"
@@ -107,7 +111,7 @@ export function Header() {
               />
             </button>
 
-            <button className="rounded-lg bg-[#1A1F35] hover:bg-[#232941] flex items-center justify-center w-[40px] h-[40px] border border-[#252D47]">
+            <button className="rounded-lg bg-[#1A1F35] hover:bg-[#232941] flex items-center justify-center w-[40px] h-[40px] border border-[#252D47] cursor-pointer">
               <Image
                 src="/icons/search/magnifer.png"
                 alt="Search"
@@ -117,7 +121,7 @@ export function Header() {
               />
             </button>
 
-            <button className="rounded-lg bg-[#1A1F35] hover:bg-[#232941] flex items-center justify-center w-[40px] h-[40px] border border-[#252D47]">
+            <button className="rounded-lg bg-[#1A1F35] hover:bg-[#232941] flex items-center justify-center w-[40px] h-[40px] border border-[#252D47] cursor-pointer">
               <Image
                 src="/icons/notifications/bell.png"
                 alt="Notifications"

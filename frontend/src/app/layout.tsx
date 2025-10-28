@@ -5,6 +5,9 @@ import { SidebarProvider } from "@/shared/context/SidebarContext";
 import { Header } from "@/widgets/Header/Header";
 import Sidebar from "@/widgets/Sidebar/Sidebar";
 import { ApplySidebarSpacing } from "@/shared/hooks/useApplySidebarSpacing";
+import { AuthProvider } from "@/shared/context/AuthContext";
+import ChatSidebar from "@/features/chat/ui/ChatSidebar";
+import { ChatProvider } from "@/shared/context/ChatContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,16 +27,29 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="bg-[#0B1020] text-white">
-        <SidebarProvider>
-          <Header />
-          <Sidebar />
-          <ApplySidebarSpacing />
-          {/* смещение контента: когда sidebar открыт 264px, иначе 72px; на мобилке нет смещения */}
-          <main className="pt-16 md:transition-all md:duration-200 md:ml-[264px] data-[compact=true]:md:ml-[72px]" id="app-main">
-            {children}
-          </main>
-        </SidebarProvider>
+      <body className={`${geistSans.variable} ${geistMono.variable} bg-[#0B1020] text-white`}>
+        <AuthProvider>
+          <ChatProvider>
+            <SidebarProvider>
+              <Header />
+              <Sidebar />
+              <ApplySidebarSpacing />
+              <main
+                id="app-main"
+                className="
+                  pt-16
+                  md:transition-all md:duration-200
+                  md:ml-[264px] data-[compact=true]:md:ml-[72px]
+                  bg-[#0F1426]
+                "
+              >
+                <div className="mx-auto max-w-[2000px] xl:pr-[325px]">{children}</div>
+              </main>
+
+              <ChatSidebar />
+            </SidebarProvider>
+          </ChatProvider>
+        </AuthProvider>
       </body>
     </html>
   );

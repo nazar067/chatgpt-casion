@@ -35,3 +35,6 @@ body {
 .icon-header {
   filter: brightness(0) saturate(100%) invert(82%) sepia(16%) saturate(399%) hue-rotate(189deg) brightness(92%) contrast(83%);
 }
+.icon-chat {
+  filter: brightness(0) saturate(100%) invert(71%) sepia(89%) saturate(2159%) hue-rotate(161deg) brightness(102%) contrast(101%);
+}

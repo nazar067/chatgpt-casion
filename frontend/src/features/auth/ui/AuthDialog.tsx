@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { DialogRoot } from "@/shared/ui/dialog";
 import { Button } from "@/shared/ui/button";
@@ -23,31 +23,61 @@ const montserratForButtons = Montserrat({
   style: ["normal"],
 });
 
+type AuthDialogProps = {
+  initialTab?: "register" | "login";
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  hideTrigger?: boolean;
+};
+
 export function AuthDialog({
   initialTab = "register",
-}: {
-  initialTab?: "register" | "login";
-}) {
-  const [open, setOpen] = useState(false);
+  open: controlledOpen,
+  onOpenChange,
+  hideTrigger = false,
+}: AuthDialogProps) {
+  const isControlled = controlledOpen !== undefined;
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
+  const open = isControlled ? (controlledOpen as boolean) : uncontrolledOpen;
+  const setOpen = isControlled
+    ? (onOpenChange ?? (() => {}))
+    : setUncontrolledOpen;
+
   const [tab, setTab] = useState<"register" | "login">(initialTab);
+
+    useEffect(() => {
+    if (!isControlled && hideTrigger) {
+      setUncontrolledOpen(true);
+    }
+  }, [isControlled, hideTrigger])
 
   return (
     <>
-      {initialTab === "register" ? (
-        <Button variant="primaryAuth" onClick={() => setOpen(true)} className="h-11 w-[102px]">
-          Register
-        </Button>
-      ) : (
-        <Button variant="secondaryAuth" onClick={() => setOpen(true)} className="h-11">
-          Login
-        </Button>
+      {!hideTrigger && (
+        initialTab === "register" ? (
+          <Button
+            variant="primaryAuth"
+            onClick={() => setOpen(true)}
+            className="h-11 w-[102px] cursor-pointer"
+          >
+            Register
+          </Button>
+        ) : (
+          <Button
+            variant="secondaryAuth"
+            onClick={() => setOpen(true)}
+            className="h-11 cursor-pointer"
+          >
+            Login
+          </Button>
+        )
       )}
 
       <DialogRoot open={open} onClose={() => setOpen(false)}>
         <div className="relative grid w-[min(92vw,700px)] grid-cols-1 overflow-hidden rounded-2xl bg-[#0E1323] text-white shadow-2xl md:grid-cols-[300px_380px]">
           <button
             onClick={() => setOpen(false)}
-            className="absolute right-3 top-3 z-20 rounded-lg p-2 text-gray-300 hover:bg-white/10"
+            className="absolute right-3 top-3 z-20 rounded-lg p-2 text-gray-300 hover:bg-white/10 cursor-pointer"
             aria-label="Close"
           >
             <X size={18} />
@@ -167,7 +197,7 @@ export function AuthDialog({
             <div className="mt-2 flex items-center gap-2 rounded-xl bg-[#141A2E] p-1">
               <button
                 onClick={() => setTab("register")}
-                className={`${montserratForButtons.className} flex-1 rounded-lg px-4 py-2 text-sm font-medium ${
+                className={`${montserratForButtons.className} flex-1 rounded-lg px-4 py-2 text-sm font-medium cursor-pointer ${
                   tab === "register"
                     ? "bg-gradient-to-r from-sky-500 to-sky-400 text-wihite"
                     : "text-gray-300 hover:bg-white/5"
@@ -177,7 +207,7 @@ export function AuthDialog({
               </button>
               <button
                 onClick={() => setTab("login")}
-                className={`${montserratForButtons.className} flex-1 rounded-lg px-4 py-2 text-sm font-medium ${
+                className={`${montserratForButtons.className} flex-1 rounded-lg px-4 py-2 text-sm font-medium cursor-pointer ${
                   tab === "login"
                     ? "bg-gradient-to-r from-sky-500 to-sky-400 text-white"
                     : "text-gray-300 hover:bg-white/5"
@@ -198,7 +228,7 @@ export function AuthDialog({
                   placeholder="Referral code"
                 />
 
-                <Button type="submit" variant="auth">
+                <Button type="submit" variant="auth" className="cursor-pointer">
                   Register
                 </Button>
 
@@ -209,7 +239,7 @@ export function AuthDialog({
               <form className="mt-2 grid gap-3">
                 <LabeledInput label="E-mail" placeholder="Enter e-mail" type="email" />
                 <LabeledInput label="Password" placeholder="Enter password" type="password" />
-                <Button type="submit" variant="auth">
+                <Button type="submit" variant="auth" className="cursor-pointer">
                   Log in
                 </Button>
 
@@ -262,7 +292,7 @@ function OrDivider() {
 function SocialRow() {
   return (
     <div className="grid grid-cols-3 gap-2">
-      <button className="h-11 rounded-xl bg-[#141A2E] hover:bg-white/5 flex items-center justify-center">
+      <button className="h-11 rounded-xl bg-[#141A2E] hover:bg-white/5 flex items-center justify-center cursor-pointer">
         <Image
           src="/icons/other/google.png"
           alt="Google"
@@ -272,7 +302,7 @@ function SocialRow() {
         />
       </button>
 
-      <button className="h-11 rounded-xl bg-[#141A2E] hover:bg-white/5 flex items-center justify-center">
+      <button className="h-11 rounded-xl bg-[#141A2E] hover:bg-white/5 flex items-center justify-center cursor-pointer">
         <Image
           src="/icons/other/metamask.png"
           alt="Metamask"
@@ -282,7 +312,7 @@ function SocialRow() {
         />
       </button>
 
-      <button className="h-11 rounded-xl bg-[#141A2E] hover:bg-white/5 flex items-center justify-center">
+      <button className="h-11 rounded-xl bg-[#141A2E] hover:bg-white/5 flex items-center justify-center cursor-pointer">
         <Image
           src="/icons/other/steam.png"
           alt="Steam"
