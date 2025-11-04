@@ -38,3 +38,9 @@ body {
 .icon-chat {
   filter: brightness(0) saturate(100%) invert(71%) sepia(89%) saturate(2159%) hue-rotate(161deg) brightness(102%) contrast(101%);
 }
+.icon-active-tab{
+  filter: brightness(0) saturate(100%) invert(56%) sepia(34%) saturate(1169%) hue-rotate(158deg) brightness(89%) contrast(90%);
+}
+.icon-non-active-tab{
+  filter: brightness(0) saturate(100%) invert(67%) sepia(0%) saturate(958%) hue-rotate(202deg) brightness(95%) contrast(84%);
+}

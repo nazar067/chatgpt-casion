@@ -66,7 +66,7 @@ export function AuthDialog({
           <Button
             variant="secondaryAuth"
             onClick={() => setOpen(true)}
-            className="h-11 cursor-pointer"
+            className="h-11 cursor-pointer text-sm"
           >
             Login
           </Button>

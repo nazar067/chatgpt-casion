@@ -1,6 +1,5 @@
 
 export const mainLinks = [
-  { href: "/promotions", label: "Promotions", icon: "/icons/other/promo.png" },
   { href: "/favorites",   label: "Favorites",   icon: "/icons/like/star.png" },
   { href: "/affiliate",   label: "Affiliate program", icon: "/icons/users/users.png" },
 ];

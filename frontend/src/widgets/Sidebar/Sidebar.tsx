@@ -61,6 +61,51 @@ export default function Sidebar() {
           )}
         </Link>
 
+        <Link
+          href="/promotions"
+          onClick={closeSheet}
+          className={cn(
+            "relative block w-full overflow-hidden rounded-lg transition hover:opacity-90",
+            "flex items-center gap-3 p-3 h-[48px]",
+            "bg-[#FFBB001A] text-white"
+          )}
+        >
+          <span
+            aria-hidden
+            className="pointer-events-none absolute inset-0 rounded-lg"
+            style={{
+              padding: "1.5px",
+              background:
+                "linear-gradient(to bottom, rgba(255,187,0,0) 0%, #FFBB00 25%, #FFBB00 75%, rgba(255,187,0,0) 100%)",
+              WebkitMask:
+                "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
+              WebkitMaskComposite: "xor",
+              maskComposite: "exclude",
+              borderRadius: "8px",
+              boxShadow: "0 0 8px 2px rgba(255,187,0,0.6)",
+            }}
+          />
+
+          <div className={cn("relative flex-shrink-0", isOpen ? "ml-2" : "")}>
+            <img
+              src="/icons/other/promo.png"
+              alt="Promotions Icon"
+              className="h-5 w-5 object-contain drop-shadow-[0_4px_6px_rgba(0,0,0,0.25)] icon-promo"
+              style={{
+                transform: "translateY(2px)",
+              }}
+            />
+          </div>
+
+          {isOpen && (
+            <div className="flex flex-col text-left">
+              <span className="text-base font-bold text-white leading-tight">
+                Promotions
+              </span>
+            </div>
+          )}
+        </Link>
+
         {/* Main */}
         <Section title=" " isOpen={isOpen}>
           {mainLinks.map(i => (
@@ -180,7 +225,7 @@ function CollapsibleSection({
         onClick={() => isOpenSidebar && setOpen(v => !v)}
         className={cn(
           "flex w-full items-center gap-2 px-3 py-3 text-sm font-semibold text-gray-200/90 transition-colors",
-          "bg-[#1E253B] hover:bg-[#1E253B]",
+          "bg-[#1E253B] hover:bg-[#1E253B] cursor-pointer",
           open ? "rounded-lg" : "rounded-lg"
         )}  
         aria-expanded={effectiveOpen}

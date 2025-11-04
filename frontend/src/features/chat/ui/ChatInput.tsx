@@ -62,7 +62,7 @@ export default function ChatInput() {
             type="submit"
             disabled={!text.trim()}
             className={cn(
-              "h-9 shrink-0 rounded-md px-3 text-sm font-medium transition",
+              "h-9 shrink-0 rounded-md px-3 text-sm font-bold transition",
               text.trim()
                 ? "bg-sky-500 text-white hover:bg-sky-600 cursor-pointer"
                 : "bg-white/10 text-gray-400 cursor-not-allowed"
@@ -74,7 +74,7 @@ export default function ChatInput() {
           <button
             type="button"
             onClick={() => setShowAuthDialog(true)}
-            className="h-9 shrink-0 rounded-md px-3 text-sm font-medium bg-sky-500 text-white hover:bg-sky-600 transition cursor-pointer"
+            className="h-9 shrink-0 rounded-md px-3 text-sm font-bold bg-sky-500 text-white hover:bg-sky-600 transition cursor-pointer"
           >
             Login
           </button>
