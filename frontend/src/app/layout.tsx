@@ -8,6 +8,7 @@ import { ApplySidebarSpacing } from "@/shared/hooks/useApplySidebarSpacing";
 import { AuthProvider } from "@/shared/context/AuthContext";
 import ChatSidebar from "@/features/chat/ui/ChatSidebar";
 import { ChatProvider } from "@/shared/context/ChatContext";
+import Footer from "@/widgets/Footer/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -56,6 +57,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   {children}
                 </div>
               </main>
+              <Footer />
               <ChatSidebar />
             </SidebarProvider>
           </ChatProvider>

@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import * as React from "react";
 import { Montserrat } from "next/font/google";
-
 import { useSidebar } from "@/shared/context/SidebarContext";
 import { useChat } from "@/shared/context/ChatContext";
 import { useAuth } from "@/shared/context/AuthContext";
@@ -12,7 +11,6 @@ import { BalanceBox } from "./components/BalanceBox";
 import { RightUtilities } from "./components/RightUtilities";
 import { UserMenu } from "./components/UserMenu";
 import { AuthDialog } from "@/features/auth/ui/AuthDialog";
-
 
 const montserrat = Montserrat({
   subsets: ["latin"],
