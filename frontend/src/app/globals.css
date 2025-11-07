@@ -44,3 +44,6 @@ body {
 .icon-non-active-tab{
   filter: brightness(0) saturate(100%) invert(67%) sepia(0%) saturate(958%) hue-rotate(202deg) brightness(95%) contrast(84%);
 }
+.icon-fiat-deposit{
+  filter: brightness(0) saturate(100%) invert(86%) sepia(5%) saturate(6228%) hue-rotate(38deg) brightness(104%) contrast(80%);
+}

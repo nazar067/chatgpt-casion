@@ -17,12 +17,12 @@ const montserrat = Montserrat({
 
 export default function ChatSidebar() {
   const { isChatOpen } = useChat();
-  if (!isChatOpen) return null;
-
   const [msgs, setMsgs] = React.useState<T[]>([]);
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
+    if (!isChatOpen) return;
+
     const unsub = subscribeMessages((m) => {
       setMsgs(m);
       requestAnimationFrame(() => {
@@ -31,8 +31,11 @@ export default function ChatSidebar() {
         el.scrollTop = el.scrollHeight;
       });
     });
+
     return unsub;
-  }, []);
+  }, [isChatOpen]);
+  
+  if (!isChatOpen) return null;
 
   return (
     <aside

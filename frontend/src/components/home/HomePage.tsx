@@ -1,10 +1,9 @@
 "use client";
 
 import WelcomeBanner from "./WelcomeBanner";
-import PromoBanner from "./PromoBanner";
 import GameCarousel from "./GameCarousel";
 import Leaderboard from "./Leaderboard";
-import { games, leaderboard, welcomeBanner, promoBanner } from "@/data/home";
+import { games, welcomeBanner } from "@/data/home";
 import LiveDrops from "./LiveDrops";
 
 export default function HomePage() {

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { DialogRoot } from "@/shared/ui/dialog";
 import { Button } from "@/shared/ui/button";
-import { X, ShieldAlert } from "lucide-react";
+import { X } from "lucide-react";
 import { Montserrat } from "next/font/google";
 
 const montserratItalic = Montserrat({

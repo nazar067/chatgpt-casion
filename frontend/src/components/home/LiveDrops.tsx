@@ -16,7 +16,7 @@ export default function LiveDrops({ initial = initialLiveDrops, maxVisible = 12 
 
   const trackRef = React.useRef<HTMLDivElement | null>(null);
   const [shift, setShift] = React.useState(0);
-  const [gap, setGap] = React.useState(24);
+  const [gap] = React.useState(24);
 
   const measureItemWidth = React.useCallback(() => {
     const el = trackRef.current;

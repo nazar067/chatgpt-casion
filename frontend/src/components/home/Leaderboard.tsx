@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/shared/lib/cn";
 import { LeaderRowEx, TabKey } from "./leaderboard/types";
 import { fetchLeaderboard } from "./leaderboard/leaderboardApi";
@@ -53,11 +53,6 @@ export default function Leaderboard() {
 
     return () => controller.abort();
   }, [active, pageSize]);
-
-  const title = useMemo(
-    () => TABS.find((t) => t.key === active)?.label ?? "Leaderboard",
-    [active]
-  );
 
   return (
     <div className="w-full max-w-[1272px] mx-auto">

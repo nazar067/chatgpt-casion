@@ -2,7 +2,6 @@ import { cn } from "@/shared/lib/cn";
 import SkeletonRow from "./SkeletonRow";
 import { LeaderRowEx } from "./types";
 import { Montserrat } from "next/font/google";
-import { m } from "framer-motion";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -97,7 +96,7 @@ export default function BaseTable({
                         const val = r.betAmount ?? "";
                         const match = val.match(/([.,])(.*)/);
                         if (!match) return val;
-                        const [full, sep, rest] = match;
+                        const [sep, rest] = match;
                         const main = val.slice(0, val.indexOf(sep));
                         return (
                           <>
@@ -134,7 +133,7 @@ export default function BaseTable({
                           return <span className="text-[#85E531]">{val}</span>;
                         }
 
-                        const [full, sep, rest] = match;
+                        const [sep, rest] = match;
                         const main = val.slice(0, val.indexOf(sep));
 
                         return (

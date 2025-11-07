@@ -11,6 +11,7 @@ import { BalanceBox } from "./components/BalanceBox";
 import { RightUtilities } from "./components/RightUtilities";
 import { UserMenu } from "./components/UserMenu";
 import { AuthDialog } from "@/features/auth/ui/AuthDialog";
+import { useDepositModal } from "@/features/wallet";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -22,6 +23,7 @@ export function Header() {
   const { toggle, openSheet } = useSidebar();
   const { toggleChat } = useChat();
   const { isAuthenticated } = useAuth();
+  const { openDeposit } = useDepositModal();
 
   const user = React.useMemo(
     () => ({
@@ -102,8 +104,9 @@ export function Header() {
               <BalanceBox
                 amount={user.balance}
                 currency={user.currency}
-                onDeposit={() => console.log("deposit click")}
+                onDeposit={() => openDeposit({ method: "fiat" })}
               />
+
               <UserMenu
                 name={user.name}
                 avatar={user.avatar}

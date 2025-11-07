@@ -72,7 +72,6 @@ export const initialLiveDrops: LiveDrop[] = [
 ];
 
 export function makeMockDrop(i: number): LiveDrop {
-  const n = (i % 8) + 1;
   return {
     id: `mock_${Date.now()}_${i}`,
     amount: 556,
