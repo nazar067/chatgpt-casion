@@ -239,6 +239,12 @@ export function AuthDialog({
               <form className="mt-2 grid gap-3">
                 <LabeledInput label="E-mail" placeholder="Enter e-mail" type="email" />
                 <LabeledInput label="Password" placeholder="Enter password" type="password" />
+                <button
+                    type="button"
+                    className={`${montserratForButtons.className} justify-self-start text-[13px] font-semibold text-[#31CFFF] hover:text-sky-300 hover:underline focus:outline-none cursor-pointer`}
+                  >
+                    Forgot password?
+                </button>
                 <Button type="submit" variant="auth" className="cursor-pointer">
                   Log in
                 </Button>
@@ -273,7 +279,7 @@ function LabeledInput({
       <input
         type={type}
         placeholder={placeholder}
-        className={`h-11 rounded-xl bg-[#141A2E] px-3 text-sm text-white placeholder:text-gray-500 outline-none ring-1 ring-white/10 focus:ring-sky-500`}
+        className={`${montserratForButtons.className} h-11 rounded-xl bg-[#141A2E] px-3 text-sm text-white placeholder:text-gray-500 outline-none ring-1 ring-white/10 focus:ring-sky-500`}
       />
     </label>
   );

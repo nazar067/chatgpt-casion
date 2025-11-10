@@ -10,6 +10,9 @@ import ChatSidebar from "@/features/chat/ui/ChatSidebar";
 import { ChatProvider } from "@/shared/context/ChatContext";
 import Footer from "@/widgets/Footer/Footer";
 import { DepositModal } from "@/features/wallet";
+import DepositPendingModal from "@/features/wallet/components/Deposit/DepositPendingModal";
+import DepositSuccessModal from "@/features/wallet/components/Deposit/DepositSuccessModal";
+import DepositFailedModal from "@/features/wallet/components/Deposit/DepositFailedModal";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -59,8 +62,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 </div>
               </main>
               <Footer />
+              <DepositPendingModal />
               <ChatSidebar />
               <DepositModal />
+              <DepositSuccessModal />
+              <DepositFailedModal />
             </SidebarProvider>
           </ChatProvider>
         </AuthProvider>

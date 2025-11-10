@@ -109,7 +109,7 @@ export default function WithdrawCrypto() {
       </div>
       <WithdrawSummary currency={currency} amountUsd={amount} />
       <button
-        className={`${montserratButton.className} h-12 w-full rounded-xl bg-[#FFC300] text-base font-bold text-black hover:opacity-90 cursor-pointer`}
+        className={`${montserratButton.className} h-12 w-full rounded-xl bg-[#FFC300] text-base font-bold text-black hover:opacity-90 cursor-pointer active:translate-y-[1px]`}
       >
         Withdraw
       </button>

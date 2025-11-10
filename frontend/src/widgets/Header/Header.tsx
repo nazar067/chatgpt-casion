@@ -104,7 +104,7 @@ export function Header() {
               <BalanceBox
                 amount={user.balance}
                 currency={user.currency}
-                onDeposit={() => openDeposit({ method: "fiat" })}
+                onDeposit={() => openDeposit({ method: "crypto" })}
               />
 
               <UserMenu

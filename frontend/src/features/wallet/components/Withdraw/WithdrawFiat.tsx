@@ -113,7 +113,7 @@ export default function WithdrawFiat() {
         </div>
       </div>
 
-      <button className={`${montserrat.className} h-12 w-full rounded-xl bg-[#FFC300] text-base font-semibold text-black hover:opacity-90 cursor-pointer`}>
+      <button className={`${montserrat.className} h-12 w-full rounded-xl bg-[#FFC300] text-base font-semibold text-black hover:opacity-90 cursor-pointer active:translate-y-[1px]`}>
         Withdraw
       </button>
     </div>

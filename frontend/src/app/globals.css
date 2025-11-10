@@ -25,6 +25,10 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+input::placeholder {
+  font-family: inherit;
+}
+
 .icon-colored {
   filter: brightness(0) saturate(100%) invert(54%) sepia(8%) saturate(1165%)
     hue-rotate(196deg) brightness(90%) contrast(89%);

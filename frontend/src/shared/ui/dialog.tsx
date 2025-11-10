@@ -4,6 +4,36 @@ import { createPortal } from "react-dom";
 import type { ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
+let lockCount = 0;
+
+function lockScroll() {
+  if (lockCount++ === 0) {
+    const html = document.documentElement;
+    html.setAttribute("data-dialog-locked", "true");
+    html.style.overflow = "hidden";
+  }
+}
+
+function unlockScroll() {
+  if (lockCount > 0 && --lockCount === 0) {
+    const html = document.documentElement;
+    html.removeAttribute("data-dialog-locked");
+    html.style.overflow = "";
+  }
+}
+
+function setMainInert(enabled: boolean) {
+  const main = document.getElementById("app-main");
+  if (!main) return;
+  if (enabled) {
+    main.setAttribute("inert", "");
+    main.setAttribute("aria-hidden", "true");
+  } else {
+    main.removeAttribute("inert");
+    main.removeAttribute("aria-hidden");
+  }
+}
+
 type DialogRootProps = {
   open: boolean;
   onClose: () => void;
@@ -21,18 +51,22 @@ export function DialogRoot({
 }: DialogRootProps) {
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
-    if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    if (!mounted) return;
+    if (open) {
+      lockScroll();
+      setMainInert(true);
+    } else {
+      setMainInert(false);
+      unlockScroll();
+    }
     return () => {
-      document.body.style.overflow = prev;
+      setMainInert(false);
+      unlockScroll();
     };
-  }, [open]);
+  }, [open, mounted]);
 
   useEffect(() => {
     if (!open) return;
@@ -49,8 +83,11 @@ export function DialogRoot({
     <AnimatePresence>
       {open && (
         <motion.div
-          className={`fixed inset-0 z-50 grid place-items-center ${backdropClassName}`}
-          onClick={onClose}
+          aria-hidden={false}
+          className={`fixed inset-0 z-[100] grid place-items-center ${backdropClassName}`}
+          onMouseDown={(e) => {
+            if (e.target === e.currentTarget) onClose();
+          }}
           initial={{ backgroundColor: "rgba(0,0,0,0)" }}
           animate={{ backgroundColor: "rgba(0,0,0,0.6)" }}
           exit={{ backgroundColor: "rgba(0,0,0,0)" }}
@@ -59,7 +96,7 @@ export function DialogRoot({
           <motion.div
             role="dialog"
             aria-modal="true"
-            onClick={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
             className={contentClassName}
             initial={{ y: "-20vh", opacity: 0, scale: 0.98 }}
             animate={{ y: "0vh", opacity: 1, scale: 1 }}

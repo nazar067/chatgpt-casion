@@ -5,6 +5,8 @@ import Image from "next/image";
 import { ChevronUp } from "lucide-react";
 import { cn } from "@/shared/lib/cn";
 import { Montserrat } from "next/font/google";
+import { useDepositPending } from "../../store/useDepositPending";
+import { startCryptoDeposit } from "@/shared/api/wallet";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -24,6 +26,19 @@ export default function DepositCrypto() {
   const [network, setNetwork] = React.useState<NetworkKey>("BITCOIN");
 
   const currentCrypto = CRYPTO_ITEMS[currency];
+  const openPending = useDepositPending((s) => s.open);
+
+  async function handleMadeDeposit() {
+    // тут можно пробрасывать userId из контекста auth
+    const { txId } = await startCryptoDeposit({
+      userId: "demo-user",           // TODO: заменить на реальный id
+      currency,
+      network,
+      address: addr,
+      // amount: ... // если появится ввод суммы в crypto
+    });
+    openPending(txId);
+  }
 
   return (
     <div className="space-y-4 text-white">
@@ -40,13 +55,13 @@ export default function DepositCrypto() {
       {/* QR */}
       <div className="relative mx-auto mt-2 w-[168px] rounded-xl overflow-hidden bg-white/10 p-3">
         <Image
-          src="/deposit/qr-bg.png"
+          src="/deposit-popup/qr-bg.png"
           alt="Background"
           fill
           className="object-cover opacity-40"
         />
         <Image
-          src="/deposit/qr-code.png"
+          src="/deposit-popup/qr-code.png"
           alt="QR"
           width={180}
           height={180}
@@ -76,7 +91,10 @@ export default function DepositCrypto() {
         </div>
       </div>
 
-      <button className={`${montserratButton.className} h-12 w-full rounded-xl bg-[#FFC300] text-base font-bold text-black hover:opacity-90 cursor-pointer`}>
+      <button 
+        onClick={handleMadeDeposit}
+        className={`${montserratButton.className} h-12 w-full rounded-xl bg-[#FFC300] text-base font-bold text-black hover:opacity-90 cursor-pointer active:translate-y-[1px]`}
+      >
         I made a deposit
       </button>
     </div>
