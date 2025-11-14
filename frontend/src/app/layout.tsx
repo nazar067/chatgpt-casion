@@ -13,6 +13,10 @@ import { DepositModal } from "@/features/wallet";
 import DepositPendingModal from "@/features/wallet/components/Deposit/DepositPendingModal";
 import DepositSuccessModal from "@/features/wallet/components/Deposit/DepositSuccessModal";
 import DepositFailedModal from "@/features/wallet/components/Deposit/DepositFailedModal";
+import { CheckInboxModal, ForgotPassModal } from "@/features/auth/ui/forgot-pass";
+import { ResetPassLinkListener } from "@/features/auth/ui/forgot-pass/ResetPassLinkListener";
+import { ResetPassModal } from "@/features/auth/ui/forgot-pass/ResetPassModal";
+import { AuthDialog } from "@/features/auth/ui/AuthDialog";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -67,6 +71,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <DepositModal />
               <DepositSuccessModal />
               <DepositFailedModal />
+              <AuthDialog hideTrigger />
+              <ForgotPassModal />
+              <CheckInboxModal />
+              <ResetPassModal />
+              <ResetPassLinkListener />
             </SidebarProvider>
           </ChatProvider>
         </AuthProvider>

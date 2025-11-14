@@ -5,7 +5,7 @@ type AuthState = { isAuthenticated: boolean; login: () => void; logout: () => vo
 const AuthCtx = React.createContext<AuthState | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [isAuthenticated, setAuth] = React.useState(false);
+  const [isAuthenticated, setAuth] = React.useState(true);
   const value = React.useMemo(
     () => ({ isAuthenticated, login: () => setAuth(true), logout: () => setAuth(false) }),
     [isAuthenticated]

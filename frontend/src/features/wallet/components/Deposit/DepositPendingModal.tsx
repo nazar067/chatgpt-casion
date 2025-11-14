@@ -72,7 +72,7 @@ export default function DepositPendingModal() {
         {/* Close */}
         <button
           onClick={handleCloseIcon}
-          className="-mt-2 absolute right-3  z-20 rounded-lg p-2 text-gray-300 hover:bg-white/10 cursor-pointer bg-[#1E253C] border border-[#252D47]"
+          className="-mt-2 absolute right-3  z-20 rounded-lg p-2 text-gray-300 hover:bg-white/10 cursor-pointer bg-[#1E253C] border border-[#252D47] active:translate-y-[1px]"
           aria-label="Close"
         >
           <X size={18} color="#B2BBD9"/>

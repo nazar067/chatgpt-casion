@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Image from "next/image";
 import { DialogRoot } from "@/shared/ui/dialog";
 import { Button } from "@/shared/ui/button";
 import { X } from "lucide-react";
 import { Montserrat } from "next/font/google";
+import { useForgotPassModal } from "./forgot-pass";
+import { useAuthModal } from "@/features/auth/model/store";
 
 const montserratItalic = Montserrat({
   subsets: ["latin"],
@@ -26,30 +28,16 @@ const montserratForButtons = Montserrat({
 type AuthDialogProps = {
   initialTab?: "register" | "login";
   open?: boolean;
-  onOpenChange?: (open: boolean) => void;
+  onOpenChange?: (open: boolean) => void; 
   hideTrigger?: boolean;
 };
 
 export function AuthDialog({
   initialTab = "register",
-  open: controlledOpen,
-  onOpenChange,
   hideTrigger = false,
 }: AuthDialogProps) {
-  const isControlled = controlledOpen !== undefined;
-  const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
-  const open = isControlled ? (controlledOpen as boolean) : uncontrolledOpen;
-  const setOpen = isControlled
-    ? (onOpenChange ?? (() => {}))
-    : setUncontrolledOpen;
-
-  const [tab, setTab] = useState<"register" | "login">(initialTab);
-
-    useEffect(() => {
-    if (!isControlled && hideTrigger) {
-      setUncontrolledOpen(true);
-    }
-  }, [isControlled, hideTrigger])
+  const { open, tab, openWith, close, setTab } = useAuthModal();
+  const { open: openForgot } = useForgotPassModal();
 
   return (
     <>
@@ -57,7 +45,7 @@ export function AuthDialog({
         initialTab === "register" ? (
           <Button
             variant="primaryAuth"
-            onClick={() => setOpen(true)}
+            onClick={() => openWith("register")}
             className="h-11 w-[102px] cursor-pointer"
           >
             Register
@@ -65,7 +53,7 @@ export function AuthDialog({
         ) : (
           <Button
             variant="secondaryAuth"
-            onClick={() => setOpen(true)}
+            onClick={() => openWith("login")}
             className="h-11 cursor-pointer text-sm"
           >
             Login
@@ -73,11 +61,11 @@ export function AuthDialog({
         )
       )}
 
-      <DialogRoot open={open} onClose={() => setOpen(false)}>
+      <DialogRoot open={open} onClose={close}>
         <div className="relative grid w-[min(92vw,700px)] grid-cols-1 overflow-hidden rounded-2xl bg-[#0E1323] text-white shadow-2xl md:grid-cols-[300px_380px]">
           <button
-            onClick={() => setOpen(false)}
-            className="absolute right-3 top-3 z-20 rounded-lg p-2 text-gray-300 hover:bg-white/10 cursor-pointer"
+            onClick={close}
+            className="absolute right-3 top-3 z-20 rounded-lg p-2 text-gray-300 hover:bg-white/10 cursor-pointer active:translate-y-[1px]"
             aria-label="Close"
           >
             <X size={18} />
@@ -199,7 +187,7 @@ export function AuthDialog({
                 onClick={() => setTab("register")}
                 className={`${montserratForButtons.className} flex-1 rounded-lg px-4 py-2 text-sm font-medium cursor-pointer ${
                   tab === "register"
-                    ? "bg-gradient-to-r from-sky-500 to-sky-400 text-wihite"
+                    ? "bg-gradient-to-r from-sky-500 to-sky-400 text-white"
                     : "text-gray-300 hover:bg-white/5"
                 }`}
               >
@@ -240,10 +228,14 @@ export function AuthDialog({
                 <LabeledInput label="E-mail" placeholder="Enter e-mail" type="email" />
                 <LabeledInput label="Password" placeholder="Enter password" type="password" />
                 <button
-                    type="button"
-                    className={`${montserratForButtons.className} justify-self-start text-[13px] font-semibold text-[#31CFFF] hover:text-sky-300 hover:underline focus:outline-none cursor-pointer`}
-                  >
-                    Forgot password?
+                  type="button"
+                  onClick={() => {
+                    close();
+                    requestAnimationFrame(() => openForgot());
+                  }}
+                  className={`${montserratForButtons.className} justify-self-start text-[13px] font-semibold text-[#31CFFF] hover:text-sky-300 hover:underline focus:outline-none cursor-pointer`}
+                >
+                  Forgot password?
                 </button>
                 <Button type="submit" variant="auth" className="cursor-pointer">
                   Log in
@@ -298,30 +290,36 @@ function OrDivider() {
 function SocialRow() {
   return (
     <div className="grid grid-cols-3 gap-2">
-      <button className="h-11 rounded-xl bg-[#141A2E] hover:bg-white/5 flex items-center justify-center cursor-pointer">
+      <button className="h-11 rounded-xl bg-[#141A2E] hover:bg-white/5 flex items-center justify-center cursor-pointer active:translate-y-[1px] select-none">
         <Image
           src="/icons/other/google.png"
           alt="Google"
+          draggable={false}
+          onDragStart={(e) => e.preventDefault()}
           width={20}
           height={20}
           className="object-contain icon-header"
         />
       </button>
 
-      <button className="h-11 rounded-xl bg-[#141A2E] hover:bg-white/5 flex items-center justify-center cursor-pointer">
+      <button className="h-11 rounded-xl bg-[#141A2E] hover:bg-white/5 flex items-center justify-center cursor-pointer active:translate-y-[1px] select-none">
         <Image
           src="/icons/other/metamask.png"
           alt="Metamask"
+          draggable={false}
+          onDragStart={(e) => e.preventDefault()}
           width={20}
           height={20}
           className="object-contain"
         />
       </button>
 
-      <button className="h-11 rounded-xl bg-[#141A2E] hover:bg-white/5 flex items-center justify-center cursor-pointer">
+      <button className="h-11 rounded-xl bg-[#141A2E] hover:bg-white/5 flex items-center justify-center cursor-pointer active:translate-y-[1px] select-none">
         <Image
           src="/icons/other/steam.png"
           alt="Steam"
+          draggable={false}
+          onDragStart={(e) => e.preventDefault()}
           width={20}
           height={20}
           className="object-contain icon-header"

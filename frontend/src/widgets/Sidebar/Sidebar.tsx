@@ -35,7 +35,7 @@ export default function Sidebar() {
           className={cn(
             "relative mb-3 block w-full overflow-hidden rounded-lg ring-1 ring-white/10 transition hover:opacity-90",
             "bg-gradient-to-r from-[#00BFFF5C] to-[#1EA2D51A]",
-            "flex items-center gap-3 p-3 h-[58px]"
+            "flex items-center gap-3 p-3 h-[58px] active:translate-y-[1px]"
           )}
         >
           <div className="relative -ml-4 flex-shrink-0">
@@ -67,7 +67,7 @@ export default function Sidebar() {
           className={cn(
             "relative block w-full overflow-hidden rounded-lg transition hover:opacity-90",
             "flex items-center gap-3 p-3 h-[48px]",
-            "bg-[#FFBB001A] text-white"
+            "bg-[#FFBB001A] text-white active:translate-y-[1px]"
           )}
         >
           <span
@@ -154,7 +154,7 @@ export default function Sidebar() {
         </CollapsibleSection>
 
         <div className="mt-4">
-          <div className="group rounded-lg bg-[#1E253C]">
+          <div className="group rounded-lg bg-[#1E253C] active:translate-y-[1px]">
             <Item
               {...supportLink}
               active={pathname === supportLink.href}
@@ -225,12 +225,12 @@ function CollapsibleSection({
         onClick={() => isOpenSidebar && setOpen(v => !v)}
         className={cn(
           "flex w-full items-center gap-2 px-3 py-3 text-sm font-semibold text-gray-200/90 transition-colors",
-          "bg-[#1E253B] hover:bg-[#1E253B] cursor-pointer",
+          "bg-[#1E253B] hover:bg-[#1E253B] cursor-pointer active:translate-y-[1px] select-none",
           open ? "rounded-lg" : "rounded-lg"
         )}  
         aria-expanded={effectiveOpen}
       >
-        {icon && <img src={icon} alt="" className={cn("h-5 w-5 object-contain opacity-80 icon-header", isOpenSidebar ? "ml-1.5" : "ml-0")} />}
+        {icon && <img src={icon} alt="" className={cn("h-5 w-5 object-contain opacity-80 icon-header", isOpenSidebar ? "ml-1.5" : "ml-0")} draggable={false} onDragStart={(e) => e.preventDefault()} />}
         {isOpenSidebar && <span>{title}</span>}
         {isOpenSidebar && (
           <ChevronDown

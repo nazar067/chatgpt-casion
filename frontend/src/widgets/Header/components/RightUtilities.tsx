@@ -6,17 +6,17 @@ export function RightUtilities({ toggleChat }: { toggleChat: () => void }) {
     <div className="flex items-center justify-between rounded-xl bg-[#0F1426] w-[136px] h-[48px] px-1">
       <button
         onClick={toggleChat}
-        className="rounded-lg bg-[#1A1F35] hover:bg-[#232941] flex items-center justify-center w-[40px] h-[40px] border border-[#252D47] cursor-pointer active:translate-y-[1px]"
+        className="rounded-lg bg-[#1A1F35] hover:bg-[#232941] flex items-center justify-center w-[40px] h-[40px] border border-[#252D47] cursor-pointer active:translate-y-[1px] select-none"
       >
-        <Image src="/icons/messages/chat-line.png" alt="Messages" width={18} height={18} className="icon-header" />
+        <Image src="/icons/messages/chat-line.png" alt="Messages" width={18} height={18} className="icon-header" draggable={false} onDragStart={(e) => e.preventDefault()} />
       </button>
 
-      <button className="rounded-lg bg-[#1A1F35] hover:bg-[#232941] flex items-center justify-center w-[40px] h-[40px] border border-[#252D47] cursor-pointer active:translate-y-[1px]">
-        <Image src="/icons/search/magnifer.png" alt="Search" width={18} height={18} className="icon-header" />
+      <button className="rounded-lg bg-[#1A1F35] hover:bg-[#232941] flex items-center justify-center w-[40px] h-[40px] border border-[#252D47] cursor-pointer active:translate-y-[1px] select-none">
+        <Image src="/icons/search/magnifer.png" alt="Search" width={18} height={18} className="icon-header" draggable={false} onDragStart={(e) => e.preventDefault()} />
       </button>
 
-      <button className="rounded-lg bg-[#1A1F35] hover:bg-[#232941] flex items-center justify-center w-[40px] h-[40px] border border-[#252D47] cursor-pointer active:translate-y-[1px]">
-        <Image src="/icons/notifications/bell.png" alt="Notifications" width={18} height={18} className="icon-header" />
+      <button className="rounded-lg bg-[#1A1F35] hover:bg-[#232941] flex items-center justify-center w-[40px] h-[40px] border border-[#252D47] cursor-pointer active:translate-y-[1px] select-none">
+        <Image src="/icons/notifications/bell.png" alt="Notifications" width={18} height={18} className="icon-header" draggable={false} onDragStart={(e) => e.preventDefault()} />
       </button>
     </div>
   );

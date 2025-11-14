@@ -92,7 +92,7 @@ export default function Leaderboard() {
           <div className="relative">
             <button
               onClick={() => setOpenShow((s) => !s)}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-[8px] bg-[#1E253C] hover:bg-white/10 text-white/90 ring-1 ring-white/10 cursor-pointer"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-[8px] bg-[#1E253C] hover:bg-white/10 text-white/90 ring-1 ring-white/10 cursor-pointer active:translate-y-[1px]"
             >
               <span className={`${montserrat.className}`}>Show {pageSize}</span>
               <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" className="opacity-80">

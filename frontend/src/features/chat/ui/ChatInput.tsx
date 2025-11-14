@@ -3,14 +3,15 @@ import React from "react";
 import { sendMessage } from "../api/chatApi";
 import { useAuth } from "@/shared/context/AuthContext";
 import { cn } from "@/shared/lib/cn";
-import { AuthDialog } from "@/features/auth/ui/AuthDialog";
 import { useChatUI } from "./ChatUIContext";
+import { useAuthModal } from "@/features/auth/model/store";
 
 export default function ChatInput() {
   const { isAuthenticated } = useAuth();
   const { replyTarget, setReplyTarget } = useChatUI();
   const [text, setText] = React.useState("");
-  const [showAuthDialog, setShowAuthDialog] = React.useState(false);
+
+  const { openWith } = useAuthModal();
 
   async function onSend(e?: React.FormEvent) {
     e?.preventDefault();
@@ -23,11 +24,15 @@ export default function ChatInput() {
   }
 
   const previewText =
-    replyTarget?.text ? (replyTarget.text.length > 30 ? replyTarget.text.slice(0, 30) + "…" : replyTarget.text) : "";
+    replyTarget?.text
+      ? replyTarget.text.length > 30
+        ? replyTarget.text.slice(0, 30) + "…"
+        : replyTarget.text
+      : "";
 
   return (
     <>
-      {/* aswer preview */}
+      {/* answer preview */}
       {replyTarget && (
         <div className="mb-2 flex items-start gap-2 rounded-[10px] bg-[#141A2E] px-3 py-2">
           <span className="mt-0.5 h-4 w-0.5 shrink-0 rounded bg-sky-400" />
@@ -37,7 +42,7 @@ export default function ChatInput() {
           </div>
           <button
             onClick={() => setReplyTarget(null)}
-            className="ml-2 rounded p-1 text-gray-400 hover:bg-white/10 hover:text-white"
+            className="ml-2 rounded p-1 text-gray-400 hover:bg-white/10 hover:text-white cursor-pointer active:translate-y-[1px]"
             aria-label="Cancel reply"
           >
             ×
@@ -48,9 +53,7 @@ export default function ChatInput() {
       {/* form */}
       <form onSubmit={onSend} className="flex items-center gap-2 rounded-[10px] bg-[#1E253C] px-2 py-2">
         <input
-          className={cn(
-            "h-9 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-white"
-          )}
+          className={cn("h-9 flex-1 bg-transparent text-sm text-white outline-none placeholder:text-white")}
           placeholder={isAuthenticated ? "Type a message…" : "Please log in to chat"}
           disabled={!isAuthenticated}
           value={text}
@@ -64,7 +67,7 @@ export default function ChatInput() {
             className={cn(
               "h-9 shrink-0 rounded-md px-3 text-sm font-bold transition",
               text.trim()
-                ? "bg-sky-500 text-white hover:bg-sky-600 cursor-pointer"
+                ? "bg-sky-500 text-white hover:bg-sky-600 cursor-pointer active:translate-y-[1px]"
                 : "bg-white/10 text-gray-400 cursor-not-allowed"
             )}
           >
@@ -73,15 +76,13 @@ export default function ChatInput() {
         ) : (
           <button
             type="button"
-            onClick={() => setShowAuthDialog(true)}
-            className="h-9 shrink-0 rounded-md px-3 text-sm font-bold bg-sky-500 text-white hover:bg-sky-600 transition cursor-pointer"
+            onClick={() => openWith("login")}
+            className="h-9 shrink-0 rounded-md px-3 text-sm font-bold bg-sky-500 text-white hover:bg-sky-600 transition cursor-pointer active:translate-y-[1px]"
           >
             Login
           </button>
         )}
       </form>
-
-      <AuthDialog initialTab="login" open={showAuthDialog} onOpenChange={setShowAuthDialog} hideTrigger />
     </>
   );
 }

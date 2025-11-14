@@ -83,7 +83,7 @@ export default function WithdrawCrypto() {
                   "h-9 rounded-md px-2 text-sm cursor-pointer transition-all duration-200",
                   amount === String(p)
                     ? "bg-[#1E253C] text-white"
-                    : "bg-[#1E253C] text-white/80 hover:bg-gradient-to-r hover:from-[#007CC4] hover:to-[#31CFFF] hover:text-white"
+                    : "bg-[#1E253C] text-white/80 hover:bg-gradient-to-r hover:from-[#007CC4] hover:to-[#31CFFF] hover:text-white active:translate-y-[1px]"
                 )}
               >
                 ${p}
@@ -158,12 +158,15 @@ function CurrencySelect({
   const ref = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
-    const onDoc = (e: MouseEvent) => {
-      if (!ref.current) return;
-      if (!ref.current.contains(e.target as Node)) setOpen(false);
+    function handleClickOutside(event: MouseEvent) {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside, true);
     };
-    document.addEventListener("mousedown", onDoc);
-    return () => document.removeEventListener("mousedown", onDoc);
   }, []);
 
   const current = CRYPTO_ITEMS[value];
@@ -247,12 +250,15 @@ function NetworkSelect({
   const ref = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
-    const onDoc = (e: MouseEvent) => {
-      if (!ref.current) return;
-      if (!ref.current.contains(e.target as Node)) setOpen(false);
+    function handleClickOutside(event: MouseEvent) {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside, true);
     };
-    document.addEventListener("mousedown", onDoc);
-    return () => document.removeEventListener("mousedown", onDoc);
   }, []);
 
   const current = NETWORK_ITEMS[value];

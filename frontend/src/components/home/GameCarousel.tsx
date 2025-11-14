@@ -125,14 +125,14 @@ export default function GameCarousel({ items }: { items: GameItem[] }) {
               <button
                 onClick={prev}
                 disabled={busy}
-                className="rounded-lg px-2 py-2 bg-white/5 hover:bg-white/10 text-[#B2BBD9] disabled:opacity-50 cursor-pointer"
+                className="rounded-lg px-2 py-2 bg-white/5 hover:bg-white/10 text-[#B2BBD9] disabled:opacity-50 cursor-pointer active:translate-y-[1px]"
               >
                 <ChevronLeft className="h-5 w-5" />
               </button>
               <button
                 onClick={next}
                 disabled={busy}
-                className="rounded-lg px-2 py-2 bg-white/5 hover:bg-white/10 text-[#B2BBD9] disabled:opacity-50 cursor-pointer"
+                className="rounded-lg px-2 py-2 bg-white/5 hover:bg-white/10 text-[#B2BBD9] disabled:opacity-50 cursor-pointer active:translate-y-[1px]"
               >
                 <ChevronRight className="h-5 w-5" />
               </button>
@@ -142,6 +142,7 @@ export default function GameCarousel({ items }: { items: GameItem[] }) {
           <Button
             variant="primaryAuth"
             onClick={() => setShowAll((v) => !v)}
+            disabled={busy}
             className={`${montserrat.className} h-9 w-auto px-4 cursor-pointer text-xs`}
           >
             {showAll ? "Hide all" : "View all"}
@@ -194,7 +195,9 @@ function PageGrid({ items }: { items: GameItem[] }) {
                 src={g.image}
                 alt={g.title}
                 fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                draggable={false}
+                onDragStart={(e) => e.preventDefault()}
+                className="object-cover transition-transform duration-500 group-hover:scale-105 active:translate-y-[10px] select-none"
                 sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, (max-width: 1280px) 20vw, 16.6vw"
               />
             </div>

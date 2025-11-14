@@ -44,7 +44,7 @@ export default function DepositModal() {
         {/* Close */}
         <button
           onClick={close}
-          className="absolute right-3 top-3 z-20 rounded-lg p-2 text-gray-300 hover:bg-white/10 cursor-pointer"
+          className="absolute right-3 top-3 z-20 rounded-lg p-2 text-gray-300 hover:bg-white/10 cursor-pointer active:translate-y-[1px]"
           aria-label="Close"
         >
           <X size={18} />
@@ -135,18 +135,40 @@ function DepositMethodSelect({
   const ref = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
-    const onDoc = (e: MouseEvent) => {
-      if (!ref.current) return;
-      if (!ref.current.contains(e.target as Node)) setOpen(false);
+    function handleClickOutside(event: MouseEvent) {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside, true);
     };
-    document.addEventListener("mousedown", onDoc);
-    return () => document.removeEventListener("mousedown", onDoc);
   }, []);
 
-  const items: Array<{ key: "crypto" | "fiat"; label: string; icon: string; width: number; height: number  }> = [
-    { key: "crypto", label: "Cryptocurrency", icon: "/icons/deposit/cryptos.png", width: 30, height: 30 },
-    { key: "fiat", label: "Fiat", icon: "/icons/money/safe-square.png", width: 18, height: 18 },
+  const items: Array<{
+    key: "crypto" | "fiat";
+    label: string;
+    icon: string;
+    width: number;
+    height: number;
+  }> = [
+    {
+      key: "crypto",
+      label: "Cryptocurrency",
+      icon: "/icons/deposit/cryptos.png",
+      width: 30,
+      height: 30,
+    },
+    {
+      key: "fiat",
+      label: "Fiat",
+      icon: "/icons/money/safe-square.png",
+      width: 18,
+      height: 18,
+    },
   ];
+
   const current = items.find((i) => i.key === value) ?? items[0];
 
   return (
@@ -156,8 +178,20 @@ function DepositMethodSelect({
         className="flex h-12 w-full items-center gap-2 rounded-[8px] border border-[#252D47] px-3 hover:bg-[#232941] cursor-pointer"
       >
         <span className="flex items-center gap-2 text-white">
-          <Image src={current.icon} alt="" width={current.width} height={current.height} className={cn(current.label == "Fiat" ? "icon-fiat-deposit" : "")}/>
-          <span className={`${montserratContent.className} font-semibold text-[13px]`}>{current.label}</span>
+          <Image
+            src={current.icon}
+            alt=""
+            width={current.width}
+            height={current.height}
+            className={cn(
+              current.label === "Fiat" ? "icon-fiat-deposit" : ""
+            )}
+          />
+          <span
+            className={`${montserratContent.className} font-semibold text-[13px]`}
+          >
+            {current.label}
+          </span>
         </span>
         <ChevronUp
           className={cn(
@@ -167,7 +201,7 @@ function DepositMethodSelect({
         />
       </button>
 
-      {/* Dropdown — как в UserMenu */}
+      {/* Dropdown */}
       {open && (
         <div className="absolute left-0 right-0 mt-2 rounded-2xl bg-[#1A2036] p-2 shadow-xl ring-1 ring-black/20 z-20 space-y-[4px]">
           <MethodMenuItem
@@ -194,6 +228,7 @@ function DepositMethodSelect({
     </div>
   );
 }
+
 
 function MethodMenuItem({
   active,

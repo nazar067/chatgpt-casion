@@ -12,6 +12,7 @@ import { RightUtilities } from "./components/RightUtilities";
 import { UserMenu } from "./components/UserMenu";
 import { AuthDialog } from "@/features/auth/ui/AuthDialog";
 import { useDepositModal } from "@/features/wallet";
+import { AuthTriggerLogin, AuthTriggerRegister } from "@/features/auth/ui/AuthTriggers";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -41,14 +42,14 @@ export function Header() {
         {/* Left */}
         <div className="flex items-center gap-3 pl-3 sm:pl-4">
           <button
-            className="rounded-lg bg-[#1A1F35] p-2 hover:bg-[#232941] cursor-pointer"
+            className="rounded-lg bg-[#1A1F35] p-2 hover:bg-[#232941] cursor-pointer active:translate-y-[1px] select-none"
             onClick={() => {
               if (typeof window !== "undefined" && window.innerWidth < 768) openSheet();
               else toggle();
             }}
             aria-label="Toggle sidebar"
           >
-            <Image src="/icons/list/list.png" alt="Sidebar" width={20} height={20} />
+            <Image src="/icons/list/list.png" alt="Sidebar" width={20} height={20} draggable={false} onDragStart={(e) => e.preventDefault()} />
           </button>
 
           <span className="ml-2 relative">
@@ -75,16 +76,35 @@ export function Header() {
             <nav className="flex w-full gap-2">
               <Link
                 href="/casino"
-                className={`flex flex-1 items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-sky-500 to-sky-400 px-4 py-2.5 font-medium text-sm text-white shadow hover:opacity-90 ${montserrat.className}`}
+                draggable={false}
+                onDragStart={(e) => e.preventDefault()}
+                className={`flex flex-1 items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-sky-500 to-sky-400 px-4 py-2.5 font-medium text-sm text-white shadow hover:opacity-90 active:translate-y-[1px] select-none ${montserrat.className}`}
               >
-                <Image src="/icons/casino/chip.png" alt="Casino Chip" width={14} height={14} />
+                <Image
+                  src="/icons/casino/chip.png"
+                  alt="Casino Chip"
+                  width={14}
+                  height={14}
+                  draggable={false}
+                  onDragStart={(e) => e.preventDefault()}
+                />
                 Casino
               </Link>
+
               <Link
                 href="/sport"
-                className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2 font-medium text-sm text-gray-300 hover:bg-[#232941] ${montserrat.className}`}
+                draggable={false}
+                onDragStart={(e) => e.preventDefault()}
+                className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2 font-medium text-sm text-gray-300 hover:bg-[#232941] active:translate-y-[1px] select-none ${montserrat.className}`}
               >
-                <Image src="/icons/casino/sport.png" alt="Sport Icon" width={14} height={14} />
+                <Image
+                  src="/icons/casino/sport.png"
+                  alt="Sport Icon"
+                  width={14}
+                  height={14}
+                  draggable={false}
+                  onDragStart={(e) => e.preventDefault()}
+                />
                 Sport
               </Link>
             </nav>
@@ -95,8 +115,8 @@ export function Header() {
         <div className="flex items-center gap-2 pr-3 sm:pr-4">
           {!isAuthenticated ? (
             <>
-              <AuthDialog initialTab="register" /> 
-              <AuthDialog initialTab="login" />
+              <AuthTriggerRegister />
+              <AuthTriggerLogin />
               <RightUtilities toggleChat={toggleChat} />
             </>
           ) : (

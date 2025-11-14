@@ -29,13 +29,11 @@ export default function DepositCrypto() {
   const openPending = useDepositPending((s) => s.open);
 
   async function handleMadeDeposit() {
-    // тут можно пробрасывать userId из контекста auth
     const { txId } = await startCryptoDeposit({
-      userId: "demo-user",           // TODO: заменить на реальный id
+      userId: "demo-user",
       currency,
       network,
       address: addr,
-      // amount: ... // если появится ввод суммы в crypto
     });
     openPending(txId);
   }
@@ -135,12 +133,15 @@ function CurrencySelect({
   const ref = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
-    const onDoc = (e: MouseEvent) => {
-      if (!ref.current) return;
-      if (!ref.current.contains(e.target as Node)) setOpen(false);
+    function handleClickOutside(event: MouseEvent) {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside, true);
     };
-    document.addEventListener("mousedown", onDoc);
-    return () => document.removeEventListener("mousedown", onDoc);
   }, []);
 
   const current = CRYPTO_ITEMS[value];
@@ -215,12 +216,15 @@ function NetworkSelect({
   const ref = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
-    const onDoc = (e: MouseEvent) => {
-      if (!ref.current) return;
-      if (!ref.current.contains(e.target as Node)) setOpen(false);
+    function handleClickOutside(event: MouseEvent) {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside, true);
     };
-    document.addEventListener("mousedown", onDoc);
-    return () => document.removeEventListener("mousedown", onDoc);
   }, []);
 
   const current = NETWORK_ITEMS[value];
@@ -287,7 +291,7 @@ function CopyButton({ text }: { text: string }) {
     <div className="relative">
       <button
         onClick={handleCopy}
-        className="mt-[5px] mr-1 h-9 w-9 shrink-0 rounded-lg bg-gradient-to-b from-[#38BDF8] to-[#0EA5E9] hover:opacity-90 cursor-pointer"
+        className="mt-[5px] mr-1 h-9 w-9 shrink-0 rounded-lg bg-gradient-to-b from-[#38BDF8] to-[#0EA5E9] hover:opacity-90 cursor-pointer active:translate-y-[1px] select-none"
         aria-label="Copy address"
         title="Copy"
       >
@@ -296,12 +300,14 @@ function CopyButton({ text }: { text: string }) {
           alt="Copy"
           width={15}
           height={15}
+          draggable={false}
+          onDragStart={(e) => e.preventDefault()}
           className="mx-auto"
         />
       </button>
 
       {copied && (
-        <div className="absolute right-0 -top-7 rounded-md bg-[#1E253C] px-2 py-1 text-xs text-white shadow-lg border border-white/10 animate-fade-in-out">
+        <div className={`${montserrat.className} absolute right-0 -top-7 rounded-md bg-[#1E253C] px-2 py-1 text-xs text-white shadow-lg border border-white/10 animate-fade-in-out`}>
           Copied
         </div>
       )}

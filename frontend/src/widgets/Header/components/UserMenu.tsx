@@ -37,10 +37,10 @@ export function UserMenu({
     <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-2 bg-[#1E253C] h-[48px] w-[143px] rounded-[8px] px-2 border border-[#252D47] hover:bg-[#232941] cursor-pointer"
+        className="flex items-center gap-2 bg-[#1E253C] h-[48px] w-[143px] rounded-[8px] px-2 border border-[#252D47] hover:bg-[#232941] cursor-pointer active:translate-y-[1px] select-none"
       >
         <span className="relative inline-block h-8 w-8 overflow-hidden rounded-xl">
-          <Image src={avatar} alt={name} fill sizes="32px" />
+          <Image src={avatar} alt={name} fill sizes="32px" draggable={false} onDragStart={(e) => e.preventDefault()}/>
         </span>
         <span className={`${montserrat.className} truncate text-white/90 font-semibold text-[13px]`}>{name}</span>
         <ChevronUp

@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { AuthDialog } from "@/features/auth/ui/AuthDialog";
 import { Montserrat } from "next/font/google";
+import { useAuthModal } from "@/features/auth/model/store";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -14,6 +15,7 @@ const montserrat = Montserrat({
 
 export default function WelcomeBanner({ src, alt }: { src: string; alt: string }) {
   const [open, setOpen] = useState(false);
+  const { openWith } = useAuthModal();
 
   return (
     <div className="w-full max-w-[1272px] mx-auto">
@@ -41,12 +43,12 @@ export default function WelcomeBanner({ src, alt }: { src: string; alt: string }
 
               <div className="mt-6 translate-y-[60px] flex items-center gap-3 flex-wrap">
                 <button
-                  onClick={() => setOpen(true)}
+                  onClick={() => openWith("register")}
                   className={`${montserrat.className} font-[700] h-12 px-5 rounded-[10px] cursor-pointer
                              text-[#1A1F35] font-semibold
                              bg-[#FFBE1A] hover:bg-[#FFC73A] active:bg-[#E7AD14]
                              shadow-[inset_0_-2px_0_rgba(0,0,0,0.15)]
-                             ring-1 ring-black/10`}
+                             ring-1 ring-black/10 active:translate-y-[1px]`}
                 >
                   Register
                 </button>
@@ -54,30 +56,36 @@ export default function WelcomeBanner({ src, alt }: { src: string; alt: string }
                 <span className={`${montserrat.className} font-[700] text-white/80 font-semibold`}>OR</span>
 
                 <div className="grid grid-flow-col auto-cols-[44px] gap-2">
-                  <button className="h-11 w-11 rounded-xl bg-[#141A2E] hover:bg-white/5 flex items-center justify-center cursor-pointer">
+                  <button className="h-11 w-11 rounded-xl bg-[#141A2E] hover:bg-white/5 flex items-center justify-center cursor-pointer active:translate-y-[1px] select-none">
                     <Image
                       src="/icons/other/google.png"
                       alt="Google"
+                      draggable={false}
+                      onDragStart={(e) => e.preventDefault()}
                       width={20}
                       height={20}
                       className="object-contain icon-header"
                     />
                   </button>
 
-                  <button className="h-11 w-11 rounded-xl bg-[#141A2E] hover:bg-white/5 flex items-center justify-center cursor-pointer">
+                  <button className="h-11 w-11 rounded-xl bg-[#141A2E] hover:bg-white/5 flex items-center justify-center cursor-pointer active:translate-y-[1px] select-none">
                     <Image
                       src="/icons/other/metamask.png"
                       alt="Metamask"
+                      draggable={false}
+                      onDragStart={(e) => e.preventDefault()}
                       width={20}
                       height={20}
                       className="object-contain"
                     />
                   </button>
 
-                  <button className="h-11 w-11 rounded-xl bg-[#141A2E] hover:bg-white/5 flex items-center justify-center cursor-pointer">
+                  <button className="h-11 w-11 rounded-xl bg-[#141A2E] hover:bg-white/5 flex items-center justify-center cursor-pointer active:translate-y-[1px] select-none">
                     <Image
                       src="/icons/other/steam.png"
                       alt="Steam"
+                      draggable={false}
+                      onDragStart={(e) => e.preventDefault()}
                       width={20}
                       height={20}
                       className="object-contain icon-header"
@@ -88,8 +96,6 @@ export default function WelcomeBanner({ src, alt }: { src: string; alt: string }
             </div>
           </div>
         </div>
-
-        <AuthDialog initialTab="register" open={open} onOpenChange={setOpen} hideTrigger />
       </div>
     </div>
   );
